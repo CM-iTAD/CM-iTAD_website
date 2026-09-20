@@ -1,0 +1,8 @@
+.DS_Store
+node_modules/
+.vercel
+*.log
+
+# OneDrive / Windows cruft
+desktop.ini
+Thumbs.db
