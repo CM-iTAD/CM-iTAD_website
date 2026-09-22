@@ -28,6 +28,8 @@
   function frag(nodes) { var f = document.createDocumentFragment(); nodes.forEach(function (n) { if (n) f.appendChild(n); }); return f; }
   function catOf(id) { return D.categories.filter(function (c) { return c.id === id; })[0] || { id: id, label: id }; }
   function param(k) { return new URLSearchParams(location.search).get(k); }
+  /* Dialable href: keep "+" and digits, drop the spaces the number is shown with. */
+  function telHref(p) { return "tel:" + String(p).replace(/[^+\d]/g, ""); }
 
   /* Injects the vendored <model-viewer> element definition once, on demand.
      Browsers without module support simply show the poster image. */
@@ -103,6 +105,7 @@
           el("div", { class: "footer__h", text: "Contact" }),
           el("div", { class: "footer__links" }, [
             el("a", { href: "mailto:" + s.email, text: s.email }),
+            s.phone ? el("a", { href: telHref(s.phone), text: s.phone }) : null,
             el("a", { href: s.officialPage, target: "_blank", rel: "noopener", text: "Official university page" })
           ])
         ])
@@ -371,8 +374,7 @@
           pp.bio ? el("p", { class: "person__bio", text: pp.bio }) : null,
           (pp.email || pp.phone) ? el("div", { class: "person__contact" }, [
             pp.email ? el("a", { class: "small", href: "mailto:" + pp.email, text: pp.email }) : null,
-            /* tel: href strips spaces; the visible text keeps them for readability */
-            pp.phone ? el("a", { class: "small", href: "tel:" + pp.phone.replace(/[^+\d]/g, ""), text: pp.phone }) : null
+            pp.phone ? el("a", { class: "small", href: telHref(pp.phone), text: pp.phone }) : null
           ]) : null
         ]);
       })));
@@ -394,6 +396,13 @@
         el("span", { class: "card__sum", text: c.body })
       ]);
     })));
+
+    /* Contact actions come from site.{email,phone} so the footer and this band
+       can never disagree. Drop site.phone and the button disappears from both. */
+    fill("collab-contact", frag([
+      D.site.email ? el("a", { class: "btn btn--ghost", href: "mailto:" + D.site.email, text: D.site.email }) : null,
+      D.site.phone ? el("a", { class: "btn btn--ghost", href: telHref(D.site.phone), text: D.site.phone }) : null
+    ]));
   }
 
   /* ------------------------------------------------------------------ init */

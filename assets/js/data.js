@@ -17,6 +17,9 @@ window.CMITAD = {
     tagline: "Computation, robotics, and the built environment.",
     url: "https://cm-itad.github.io/CM-iTAD_website/",
     email: "abalymani@alfaisal.edu",
+    // Lab contact number (Dr. Alymani). Rendered in the footer and on the
+    // Collaborate "Get in touch" band. Remove this line to drop it from both.
+    phone: "+966 562 000743",
     officialPage: "https://coe.alfaisal.edu/en/cm-itad-research-lab",
     location: "Riyadh, Saudi Arabia",
     // Nav order = the order shown in the header. Add a page here to link it.
