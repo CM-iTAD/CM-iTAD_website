@@ -413,13 +413,13 @@ window.CMITAD = {
       provenance: { source: "CM-iTAD lab materials", added: "2026-09-20", verified: true }
     },
     {
-      name: "Wegdan Maged Alqahtani",
+      name: "Arch. Wegdan Maged Alqahtani",
       role: "Teaching Assistant",
       bio: "Researches outdoor thermal comfort under future climate — coupling urban fabric parameters with UTCI and air-quality prediction for Riyadh.",
       provenance: { source: "Lab membership and title supplied by the lab 2026-09-22; research description derived from wegdan-thesis+/ (Combined UTCI Comfort Fabric Study, Future Weather, AQI Prediction) — CONFIRM WORDING WITH HER.", added: "2026-09-22", verified: false }
     },
     {
-      name: "Sarah Saddam Muthana",
+      name: "Arch. Eng. Sarah Saddam Muthana",
       role: "Teaching Assistant",
       provenance: { source: "Lab membership and title supplied by the lab 2026-09-22. BIO PENDING.", added: "2026-09-22", verified: false }
     }
