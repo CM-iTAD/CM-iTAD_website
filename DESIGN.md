@@ -31,16 +31,30 @@ the site deploys standalone with no external dependency.
 
 ### Rules
 
-- **One accent per element.** Amber (`--cm-orange`) is for numerals, ticks, and the
-  single most important thing on a slide or section. Blue (`--cm-blue`) is for
-  eyebrows, links, and interactive affordances. They never compete in the same spot.
+- **One accent per element.** Amber is for numerals, ticks, and the single most
+  important thing on a slide or section. Blue is for eyebrows, links, and
+  interactive affordances. They never compete in the same spot.
+- **Each accent has two tokens, and which one you use is not a taste decision.**
+  The brand hexes (`--cm-blue` `#2E8FDD`, `--cm-orange` `#F0A02A`) are correct as
+  *marks* — the eyebrow tick, the nav underline, the callout rule — and as *text on
+  the dark bands*, where amber measures 7.04:1. As **text on the light grounds they
+  fail WCAG AA**: blue 3.18:1, amber 1.98:1 against `--bg`. Use `--cm-blue-ink`
+  (`#1D70B3`) and `--cm-orange-ink` (`#995F0B`) there; both clear 4.5:1 on `--bg`
+  *and* `--bg-panel`. The rule in one line: **mark or dark ground → brand hex;
+  text on a light ground → `-ink`.** `.section--deep` restores the bright hexes
+  automatically, so a cell numeral inside a dark band needs no override.
 - **Amber is never a background for body text.** It appears as 2px ticks, mono
   numerals, and left borders. The one exception is a deliberate emphasis panel.
 - **Never introduce a new hex.** If you need an intermediate tone, use an existing
   token. If you genuinely need a new one, add it to `:root` with a comment
   explaining what it is for — do not inline a raw hex in markup.
 - **Contrast floor:** body text 4.5:1, headline-scale text 3:1. `--fg3` is for
-  captions and metadata only, never for paragraphs.
+  captions and metadata only, never for paragraphs — but note it still has to
+  clear 4.5:1, because WCAG grants captions no exemption. It was `#84919F`
+  (2.97:1, failing) and is now `#616E7C` (4.81:1).
+- **Measure, don't eyeball.** Every ink token is verified against `--bg` and
+  `--bg-panel`. If you add or alter one, re-run that check before committing —
+  the four failures above all looked perfectly fine on a desktop screen.
 
 ### Section tone rhythm
 

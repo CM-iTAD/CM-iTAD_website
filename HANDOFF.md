@@ -148,6 +148,38 @@ provenance: {
 - Keep `summary` to one sentence — it is laid out for that.
 - `featured: true` on more than four projects: only the first four reach the home page.
 
+### 3a. Adding an interactive 3D model
+
+A project may carry an optional `model` record, rendered above its figures:
+
+```js
+model: {
+  src:     "assets/models/thing.glb",        // glTF binary only
+  poster:  "assets/img/thing-poster.jpg",    // 16:10, shown while loading
+  alt:     "What the model shows",
+  caption: "Source, triangle count, and how to interact."
+}
+```
+
+**This is the site's one third-party dependency.** `assets/js/vendor/model-viewer.min.js`
+(Google `<model-viewer>`, BSD-3-Clause, ~980 KB raw / ~264 KB gzipped) is **vendored,
+not loaded from a CDN**, so the site still deploys standalone — the property DESIGN.md §1
+is built around. `app.js` injects it via `loadModelViewer()` only on a project that
+actually has a `model`; every other page loads no JavaScript beyond `app.js`.
+
+Rules:
+- **Keep GLBs small.** Decimate before export — the current model is 25k triangles at
+  606 KB. A raw photogrammetry mesh (tens of MB) is not acceptable on a web page.
+- Always supply a `poster`. It is what a browser without ES-module support shows, and
+  it covers the load on a slow connection.
+- `.glb` only. Do not add `.obj`/`.ply` — they have no material or texture packaging
+  and would need a second loader.
+- The viewer inherits `.figure`'s hairline frame and caption, so it reads as a figure
+  rather than an embedded widget. Do not restyle it.
+
+To remove the dependency entirely, delete the `model` records and
+`assets/js/vendor/` — nothing else references them.
+
 ### Adding a research theme
 
 Append to `CMITAD.categories`. The filter row, the home-page theme grid, and the
@@ -250,9 +282,38 @@ collections in any of these.
 
 ## 8. Conventions
 
-- Vanilla ES5-compatible JS. No frameworks, no bundler, no npm dependencies.
+- Vanilla ES5-compatible JS. No frameworks, no bundler, no npm install step. The one
+  third-party library is the vendored `<model-viewer>` in `assets/js/vendor/`, loaded
+  on demand by §3a and by nothing else — keep it that way.
 - 2-space indent; double quotes in JS.
 - All styling lives in `site.css`. Inline `style` attributes are used sparingly in the
   HTML shells for one-off spacing only — never for colour or type.
 - Filenames lowercase and hyphenated.
 - Commit content and code changes separately; it makes content history readable.
+
+---
+
+## 9. Mobile & performance conventions
+
+The layout was already sound — every grid uses `minmax(0, 1fr)`, there are no fixed
+pixel widths, and `img { max-width: 100% }` is global. These are the rules that
+keep it that way.
+
+- **Fonts are `<link>`ed from each page's `<head>`, never `@import`ed from
+  `site.css`.** An `@import` cannot begin downloading until `site.css` has been
+  fetched *and* parsed, which puts two round trips in series on the critical path.
+  That costs the most on exactly the connection a phone has. `preconnect` to both
+  `fonts.googleapis.com` and `fonts.gstatic.com` precedes it.
+- **44px minimum tap target**, not the WCAG 2.2 SC 2.5.8 floor of 24×24. `.btn`,
+  `.filter`, `.nav a` and `.nav-toggle` all meet it. Check any new control.
+- **`viewport-fit=cover` plus `env(safe-area-inset-*)`.** `.wrap`,
+  `.site-header__inner` and `.site-footer` pad themselves against the notch and the
+  home indicator. A new full-bleed band must do the same, or it will sit under the
+  rounded corner on a modern phone.
+- **`overflow-wrap: break-word` is global on text elements.** This field's
+  vocabulary (`CellComplex`, `TopologicPy`, `PhaseChangeHysteresis`, bare URLs) is
+  full of long unbreakable compounds that otherwise force a sideways scroll at 320px.
+- **Test at 320px**, not 375px. The `520px` breakpoint stacks `.spec__row` and eases
+  `.h-display`, both of which only misbehave below ~360px.
+- **`site.webmanifest` makes the site installable.** If you rename or move a page,
+  leave `start_url` and `scope` alone.

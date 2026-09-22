@@ -15,7 +15,7 @@ window.CMITAD = {
     longName: "Computational Methods and Intelligent Technology in Architecture and Design",
     parent: "Alfaisal University · College of Engineering",
     tagline: "Computation, robotics, and the built environment.",
-    url: "https://cm-itad.example.org",
+    url: "https://cm-itad.github.io/CM-iTAD_website/",
     email: "abalymani@alfaisal.edu",
     officialPage: "https://coe.alfaisal.edu/en/cm-itad-research-lab",
     location: "Riyadh, Saudi Arabia",
@@ -152,8 +152,11 @@ window.CMITAD = {
         { src: "assets/img/graphml.png", alt: "Graph ML topological dataset classes", caption: "Synthetic 3D topological dataset — separation, plinth, adherence, interlock", fit: "contain" }
       ],
       tags: ["Graph ML", "Unsupervised learning", "Topology", "AEC datasets"],
+      links: [
+        { label: "Interactive knowledge graph — GML/GNN in AEC", href: "https://gml-aec.vercel.app/" }
+      ],
       publicationSlug: "dcc-2022-building-ground",
-      provenance: { source: "Alymani, Mujica, Jabi & Corcoran (2022), DCC '22 — figure from lab deck", added: "2026-09-20", verified: true }
+      provenance: { source: "Alymani, Mujica, Jabi & Corcoran (2022), DCC '22 — figure from lab deck; companion review site at gml-aec.vercel.app", added: "2026-09-20", verified: true }
     },
     {
       slug: "ai-fire-egress",
@@ -191,6 +194,12 @@ window.CMITAD = {
         { src: "assets/img/recon-arm.jpg", alt: "Reality-capture and reconstruction work in the lab", caption: "Reconstruction and texturization in the lab" }
       ],
       tags: ["Photogrammetry", "Digital twin", "IFC", "Open source", "Benchmarking"],
+      model: {
+        src: "assets/models/benchmark-model-polycam.glb",
+        poster: "assets/img/recon-model-poster.jpg",
+        alt: "Interactive 3D reconstruction of the standardised architectural model used in the benchmark — a green and white façade with three vertical bays and a pointed-arch doorway",
+        caption: "The benchmark subject, reconstructed with Polycam — 25,000 triangles from handheld mobile capture. Drag to rotate, scroll to zoom."
+      },
       publicationSlug: "sasbe-open-source-reconstruction",
       provenance: {
         source: "3D_Scanning/SASBE_paper_submission/ — manuscript and Figures-Jpg/; CM-iTAD lab photography",
@@ -375,10 +384,25 @@ window.CMITAD = {
   people: [
     {
       name: "Dr. Abdulrahman Ahmed Alymani",
-      role: "Lab Supervisor",
+      role: "Director & Founder",
       email: "abalymani@alfaisal.edu",
-      bio: "Leads CM-iTAD's research agenda across computational design, graph machine learning for the AEC sector, and robotic construction. His published work includes unsupervised graph-level representation learning for building–ground topology.",
-      provenance: { source: "CM-iTAD lab materials", added: "2026-09-20", verified: true }
+      bio: "Founded CM-iTAD and leads its research agenda across computational design, graph machine learning for the AEC sector, and robotic construction. His published work includes unsupervised graph-level representation learning for building–ground topology.",
+      provenance: { source: "CM-iTAD lab materials; title confirmed by the lab 2026-09-22", added: "2026-09-20", verified: true }
+    },
+    {
+      name: "Dr. Oriol Carrasco",
+      role: "Senior Lecturer of Architecture",
+      provenance: { source: "Lab membership and title supplied by the lab 2026-09-22; cross-checked against Projects_Architecture_dept/Faculty_Paper_Contribution_Tracker_Nested.xlsx. BIO PENDING.", added: "2026-09-22", verified: false }
+    },
+    {
+      name: "Dr. Mohammed Alsofiani",
+      role: "Assistant Professor of Architectural Engineering",
+      provenance: { source: "Lab membership and title supplied by the lab 2026-09-22; cross-checked against Projects_Architecture_dept/Faculty_Paper_Contribution_Tracker_Nested.xlsx. BIO PENDING.", added: "2026-09-22", verified: false }
+    },
+    {
+      name: "Dr. Aliaa Elabd",
+      role: "Assistant Professor of Architectural Engineering",
+      provenance: { source: "Lab membership and title supplied by the lab 2026-09-22; cross-checked against Projects_Architecture_dept/Faculty_Paper_Contribution_Tracker_Nested.xlsx (spelled 'Aljaa' there — treated as a typo). BIO PENDING.", added: "2026-09-22", verified: false }
     },
     {
       name: "Arch. Libish Murugesan",
@@ -386,6 +410,17 @@ window.CMITAD = {
       email: "lmurugesan@alfaisal.edu",
       bio: "Works across the lab's fabrication and simulation pipelines — robotic assembly with computer vision, topology optimisation with finite-element validation, and phase-change-material research from façade to urban scale.",
       provenance: { source: "CM-iTAD lab materials", added: "2026-09-20", verified: true }
+    },
+    {
+      name: "Wegdan Maged Alqahtani",
+      role: "Teaching Assistant",
+      bio: "Researches outdoor thermal comfort under future climate — coupling urban fabric parameters with UTCI and air-quality prediction for Riyadh.",
+      provenance: { source: "Lab membership and title supplied by the lab 2026-09-22; research description derived from wegdan-thesis+/ (Combined UTCI Comfort Fabric Study, Future Weather, AQI Prediction) — CONFIRM WORDING WITH HER.", added: "2026-09-22", verified: false }
+    },
+    {
+      name: "Sarah Saddam Muthana",
+      role: "Teaching Assistant",
+      provenance: { source: "Lab membership and title supplied by the lab 2026-09-22. BIO PENDING.", added: "2026-09-22", verified: false }
     }
   ],
 

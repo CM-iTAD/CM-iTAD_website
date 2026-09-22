@@ -29,6 +29,17 @@
   function catOf(id) { return D.categories.filter(function (c) { return c.id === id; })[0] || { id: id, label: id }; }
   function param(k) { return new URLSearchParams(location.search).get(k); }
 
+  /* Injects the vendored <model-viewer> element definition once, on demand.
+     Browsers without module support simply show the poster image. */
+  function loadModelViewer() {
+    if (document.getElementById("cm-model-viewer")) return;
+    var s = document.createElement("script");
+    s.id = "cm-model-viewer";
+    s.type = "module";
+    s.src = "assets/js/vendor/model-viewer.min.js";
+    document.head.appendChild(s);
+  }
+
   /* Filename used for nav highlighting. "/", "" and "/index.html" all -> "index.html" */
   function norm(p) {
     p = (p || "").split("?")[0].split("#")[0];
@@ -234,6 +245,30 @@
       ])
     ]));
 
+    /* Interactive 3D model. The viewer library is vendored in assets/js/vendor/
+       and loaded ONLY on a project that carries a `model` record — every other
+       page stays dependency-free. See HANDOFF.md §3a. */
+    if (p.model && p.model.src) {
+      loadModelViewer();
+      host.appendChild(el("div", { class: "wrap section--tight" }, [
+        el("figure", { class: "figure model", style: "margin:0" }, [
+          el("model-viewer", {
+            src: p.model.src,
+            poster: p.model.poster || null,
+            alt: p.model.alt || p.title,
+            "camera-controls": "",
+            "touch-action": "pan-y",
+            "interaction-prompt": "none",
+            "shadow-intensity": "0.6",
+            "environment-image": "neutral",
+            "max-camera-orbit": "auto 100deg auto",
+            loading: "lazy"
+          }),
+          p.model.caption ? el("figcaption", { text: p.model.caption }) : null
+        ])
+      ]));
+    }
+
     var figs = (p.images || []).map(function (im) {
       return el("figure", { class: "figure" + (im.fit === "contain" ? "" : " figure--cover"), style: "margin:0" }, [
         el("img", { src: im.src, alt: im.alt || p.title, loading: "lazy" }),
@@ -333,7 +368,7 @@
         return el("div", { class: "person" }, [
           el("span", { class: "person__name", text: pp.name }),
           el("span", { class: "person__role", text: pp.role }),
-          el("p", { class: "person__bio", text: pp.bio }),
+          pp.bio ? el("p", { class: "person__bio", text: pp.bio }) : null,
           pp.email ? el("a", { class: "small", href: "mailto:" + pp.email, text: pp.email }) : null
         ]);
       })));

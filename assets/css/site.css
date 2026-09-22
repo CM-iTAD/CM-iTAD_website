@@ -6,7 +6,8 @@
    See HANDOFF.md §2 for provenance.
    ========================================================================== */
 
-@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Serif:ital,wght@0,400;0,600;1,400&display=swap');
+/* Fonts are <link>ed from each page's <head>, not @imported here — an @import
+   serialises a second round trip behind this file. See HANDOFF.md §9. */
 
 :root {
   /* Surfaces */
@@ -19,7 +20,7 @@
   /* Ink */
   --fg1:         #11243B;
   --fg2:         #46586D;
-  --fg3:         #84919F;
+  --fg3:         #616E7C;  /* captions/metadata — was #84919F (2.97:1, failed AA); now 4.81:1 on --bg */
   --fg-on-dark:  #EAF2FA;
   --fg2-on-dark: #9DB2C9;
 
@@ -28,9 +29,17 @@
   --hairline-2:  #C2D0DF;
   --line-dark:   #21436A;
 
-  /* Brand accents */
-  --cm-blue:     #2E8FDD;
-  --cm-orange:   #F0A02A;
+  /* Brand accents.
+     The two brand hexes are correct ON DARK and as non-text marks (the eyebrow
+     tick, the nav underline, the callout rule). On the light grounds they fail
+     WCAG AA as TEXT — measured on --bg: blue 3.18:1, amber 1.98:1.
+     The two -ink variants below are the same hues darkened to clear 4.5:1 on
+     --bg AND --bg-panel. Rule: mark or dark ground -> brand hex.
+     Text on a light ground -> -ink. Never a third accent family. */
+  --cm-blue:      #2E8FDD;
+  --cm-orange:    #F0A02A;
+  --cm-blue-ink:  #1D70B3;  /* links, eyebrows, card CTAs  — 4.82:1 on --bg, 4.51:1 on --bg-panel */
+  --cm-orange-ink:#995F0B;  /* mono numerals on light      — 4.85:1 on --bg, 4.54:1 on --bg-panel */
 
   /* Type */
   --sans:  'IBM Plex Sans', ui-sans-serif, system-ui, sans-serif;
@@ -69,7 +78,13 @@ h1, h2, h3, h4 { margin: 0; font-weight: 600; letter-spacing: -.02em; line-heigh
 p { margin: 0; text-wrap: pretty; }
 ul { margin: 0; padding: 0; list-style: none; }
 
-a { color: var(--cm-blue); text-decoration: none; }
+/* This field's vocabulary is full of long unbreakable compounds — CellComplex,
+   TopologicPy, PhaseChangeHysteresis, repository URLs. Without this they punch
+   out of their container at 320px and the whole page scrolls sideways. */
+h1, h2, h3, h4, p, li, figcaption, td, th, dd, dt { overflow-wrap: break-word; }
+.h-display, .h-1 { hyphens: auto; }
+
+a { color: var(--cm-blue-ink); text-decoration: none; }
 a:hover { color: var(--fg1); }
 
 :focus-visible { outline: 2px solid var(--cm-blue); outline-offset: 3px; }
@@ -92,7 +107,7 @@ a:hover { color: var(--fg1); }
   display: flex; align-items: center; gap: 12px;
   font-family: var(--mono); font-size: 13px; font-weight: 500;
   letter-spacing: var(--tracking-label); text-transform: uppercase;
-  color: var(--cm-blue); margin-bottom: 18px;
+  color: var(--cm-blue-ink); margin-bottom: 18px;
 }
 .eyebrow::before { content: ""; width: 28px; height: 2px; background: var(--cm-orange); flex: none; align-self: center; }
 .section--deep .eyebrow { color: var(--cm-orange); }
@@ -131,14 +146,15 @@ a:hover { color: var(--fg1); }
 
 .nav { display: flex; align-items: center; gap: 4px; }
 .nav a {
-  font-size: 14.5px; color: var(--fg2); padding: 8px 12px; border-radius: var(--r-tile);
+  font-size: 14.5px; color: var(--fg2); padding: 11px 12px; border-radius: var(--r-tile);
+  display: inline-flex; align-items: center; min-height: 44px;
   transition: background .15s ease, color .15s ease;
 }
 .nav a:hover { color: var(--fg1); background: var(--bg-sunken); }
 .nav a[aria-current="page"] { color: var(--fg1); font-weight: 500; box-shadow: inset 0 -2px 0 var(--cm-orange); border-radius: 0; }
 
 .nav-toggle {
-  display: none; width: 42px; height: 42px; align-items: center; justify-content: center;
+  display: none; width: 44px; height: 44px; align-items: center; justify-content: center;
   border: 1px solid var(--hairline-2); border-radius: var(--r-tile);
   background: transparent; cursor: pointer; color: var(--fg1);
 }
@@ -164,7 +180,7 @@ a:hover { color: var(--fg1); }
   }
   .nav[data-open="true"] { transform: none; opacity: 1; pointer-events: auto; }
   .nav a { padding: 14px 4px; font-size: 17px; border-bottom: 1px solid var(--hairline); border-radius: 0; }
-  .nav a[aria-current="page"] { box-shadow: none; color: var(--cm-blue); }
+  .nav a[aria-current="page"] { box-shadow: none; color: var(--cm-blue-ink); }
 }
 
 /* ---------- hero ---------- */
@@ -214,7 +230,8 @@ a:hover { color: var(--fg1); }
 .section--deep .cells { background: var(--line-dark); border-color: var(--line-dark); }
 .section--deep .cell { background: var(--bg-deep); }
 .section--panel .cell { background: var(--bg-panel); }
-.cell__num { font-family: var(--mono); font-size: 17px; font-weight: 500; color: var(--cm-orange); }
+.cell__num { font-family: var(--mono); font-size: 17px; font-weight: 500; color: var(--cm-orange-ink); }
+.section--deep .cell__num, .section--deep .stat__n { color: var(--cm-orange); }
 @media (max-width: 960px) { .cells--4 { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
 @media (max-width: 620px) { .cells--2, .cells--3, .cells--4 { grid-template-columns: 1fr; } }
 
@@ -234,7 +251,7 @@ a:hover { color: var(--fg1); }
 .card__meta { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; }
 .card__title { font-size: 20px; font-weight: 600; letter-spacing: -.015em; line-height: 1.22; }
 .card__sum { font-size: 15.5px; line-height: 1.5; color: var(--fg2); }
-.card__more { margin-top: auto; padding-top: 12px; font-family: var(--mono); font-size: 12.5px; letter-spacing: .08em; text-transform: uppercase; color: var(--cm-blue); }
+.card__more { margin-top: auto; padding-top: 12px; font-family: var(--mono); font-size: 12.5px; letter-spacing: .08em; text-transform: uppercase; color: var(--cm-blue-ink); }
 
 .tag {
   font-family: var(--mono); font-size: 11.5px; letter-spacing: .09em; text-transform: uppercase;
@@ -246,7 +263,7 @@ a:hover { color: var(--fg1); }
 .filters { display: flex; flex-wrap: wrap; gap: 9px; margin-bottom: 30px; }
 .filter {
   font-family: var(--mono); font-size: 12.5px; letter-spacing: .08em; text-transform: uppercase;
-  padding: 9px 15px; min-height: 40px; border: 1px solid var(--hairline-2); border-radius: var(--r-pill);
+  padding: 11px 16px; min-height: 44px; border: 1px solid var(--hairline-2); border-radius: var(--r-pill);
   background: transparent; color: var(--fg2); cursor: pointer; transition: .15s ease;
 }
 .filter:hover { background: var(--bg-sunken); color: var(--fg1); }
@@ -264,6 +281,14 @@ a:hover { color: var(--fg1); }
   font-family: var(--mono); font-size: 12.5px; color: var(--fg2);
   padding: 12px 16px; border-top: 1px solid var(--hairline); background: var(--bg-panel); letter-spacing: .02em;
 }
+/* Interactive 3D model. Inherits .figure's hairline frame and caption so it
+   reads as one more figure rather than an embedded widget. */
+.model model-viewer {
+  display: block; width: 100%; aspect-ratio: 16/10;
+  background: #fff; --poster-color: #fff;
+}
+@media (max-width: 620px) { .model model-viewer { aspect-ratio: 4/3; } }
+
 .spec { border-top: 1px solid var(--hairline); }
 .spec__row { display: grid; grid-template-columns: 116px 1fr; gap: 16px; padding: 13px 0; border-bottom: 1px solid var(--hairline); font-size: 15px; }
 .spec__k { font-family: var(--mono); font-size: 12px; letter-spacing: .1em; text-transform: uppercase; color: var(--fg3); padding-top: 2px; }
@@ -274,7 +299,7 @@ a:hover { color: var(--fg1); }
   display: grid; grid-template-columns: 82px 1fr auto; gap: 22px; align-items: baseline;
   padding: 22px 0; border-bottom: 1px solid var(--hairline);
 }
-.list__year { font-family: var(--mono); font-size: 14px; color: var(--cm-orange); font-weight: 500; }
+.list__year { font-family: var(--mono); font-size: 14px; color: var(--cm-orange-ink); font-weight: 500; }
 .list__title { font-size: 19px; font-weight: 600; letter-spacing: -.012em; line-height: 1.3; }
 .list__meta { font-size: 15px; color: var(--fg2); margin-top: 5px; }
 @media (max-width: 720px) {
@@ -296,7 +321,7 @@ a:hover { color: var(--fg1); }
 
 /* ---------- stat ---------- */
 .stat { display: flex; flex-direction: column; gap: 6px; }
-.stat__n { font-family: var(--mono); font-weight: 500; font-size: clamp(38px, 5.4vw, 62px); line-height: 1; color: var(--cm-orange); }
+.stat__n { font-family: var(--mono); font-weight: 500; font-size: clamp(38px, 5.4vw, 62px); line-height: 1; color: var(--cm-orange-ink); }
 .stat__l { font-size: 15.5px; color: var(--fg2); }
 .section--deep .stat__l { color: var(--fg2-on-dark); }
 
@@ -322,6 +347,26 @@ a:hover { color: var(--fg1); }
 .callout { border: 1px solid var(--hairline); border-left: 3px solid var(--cm-orange); border-radius: var(--r-card); background: var(--bg-panel); padding: 22px 26px; }
 .breadcrumb { font-family: var(--mono); font-size: 12.5px; letter-spacing: .08em; text-transform: uppercase; color: var(--fg3); margin-bottom: 20px; }
 .breadcrumb a { color: var(--fg2); }
+
+/* ---------- small-screen refinements ----------
+   The grids already collapse (960 / 620). These handle the cases that collapsing
+   alone does not fix: fixed label columns, notch/home-indicator insets, and the
+   3D viewer, which needs more height than 16:10 once it is full-bleed. */
+
+/* Notched phones: the sticky header and the dark footer are the two bands that
+   reach the physical screen edge, so they carry the insets themselves. */
+.site-header__inner { padding-left: max(var(--gutter), env(safe-area-inset-left)); padding-right: max(var(--gutter), env(safe-area-inset-right)); }
+.wrap { padding-left: max(var(--gutter), env(safe-area-inset-left)); padding-right: max(var(--gutter), env(safe-area-inset-right)); }
+.site-footer { padding-bottom: calc(30px + env(safe-area-inset-bottom)); }
+
+@media (max-width: 520px) {
+  /* 116px of label left ~150px for values like the Methods list. Stack instead. */
+  .spec__row { grid-template-columns: 1fr; gap: 3px; padding: 12px 0; }
+  .spec__k { padding-top: 0; }
+  /* Tighten the display size a notch — 38px was set for 375px, not 320px. */
+  .h-display { font-size: clamp(31px, 8.6vw, 44px); }
+  .filters { gap: 7px; }
+}
 
 @media print { .site-header, .site-footer, .filters { display: none; } }
 @media (prefers-reduced-motion: reduce) { * { animation: none !important; transition: none !important; } html { scroll-behavior: auto; } }
