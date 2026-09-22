@@ -369,7 +369,11 @@
           el("span", { class: "person__name", text: pp.name }),
           el("span", { class: "person__role", text: pp.role }),
           pp.bio ? el("p", { class: "person__bio", text: pp.bio }) : null,
-          pp.email ? el("a", { class: "small", href: "mailto:" + pp.email, text: pp.email }) : null
+          (pp.email || pp.phone) ? el("div", { class: "person__contact" }, [
+            pp.email ? el("a", { class: "small", href: "mailto:" + pp.email, text: pp.email }) : null,
+            /* tel: href strips spaces; the visible text keeps them for readability */
+            pp.phone ? el("a", { class: "small", href: "tel:" + pp.phone.replace(/[^+\d]/g, ""), text: pp.phone }) : null
+          ]) : null
         ]);
       })));
     }

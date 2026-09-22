@@ -386,6 +386,7 @@ window.CMITAD = {
       name: "Dr. Abdulrahman Ahmed Alymani, PhD",
       role: "Founder & Director",
       email: "abalymani@alfaisal.edu",
+      phone: "+966 562 000743",
       bio: "Department Chair and Assistant Professor of Architecture and Architectural Engineering at Alfaisal University. PhD from the Welsh School of Architecture, Cardiff University, and M.Arch from SCI-Arc. He founded CM-iTAD and leads its research agenda across computational design, graph machine learning for the AEC sector, and robotic construction; his published work includes unsupervised graph-level representation learning for building–ground topology.",
       provenance: { source: "Credentials supplied by the lab 2026-09-22 (Dr. Alymani's own biography). Cardiff affiliation corroborated by the DCC '22 co-authorship and the partner wall.", added: "2026-09-20", verified: true }
     },

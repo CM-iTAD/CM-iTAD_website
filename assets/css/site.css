@@ -312,6 +312,9 @@ a:hover { color: var(--fg1); }
 .person__name { font-size: 20px; font-weight: 600; letter-spacing: -.015em; }
 .person__role { font-family: var(--mono); font-size: 13px; color: var(--fg3); letter-spacing: .04em; }
 .person__bio { font-size: 16px; color: var(--fg2); line-height: 1.6; max-width: 70ch; margin-top: 4px; }
+/* Contact links wrap rather than crowd on a narrow screen; each is a 44px target. */
+.person__contact { display: flex; flex-wrap: wrap; gap: 4px 22px; margin-top: 2px; }
+.person__contact a { display: inline-flex; align-items: center; min-height: 44px; }
 
 /* ---------- partner wall ---------- */
 .logos { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1px; background: var(--hairline); border: 1px solid var(--hairline); border-radius: var(--r-tile); overflow: hidden; }
