@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>CM-iTAD Lab has moved</title>
+<link rel="canonical" href="https://cm-itad.github.io/">
+<meta name="robots" content="noindex, follow">
+<script>
+/* Preserve the deep path: /website/publications.html -> /publications.html
+   This file is served as BOTH index.html and 404.html, so it catches every
+   path under the old project-site prefix, not just the root. */
+(function () {
+  var dest = "https://cm-itad.github.io/";
+  var rest = location.pathname.replace(/^\/+(CM-iTAD_website|website)\/?/i, "");
+  location.replace(dest + rest + location.search + location.hash);
+})();
+</script>
+<meta http-equiv="refresh" content="0; url=https://cm-itad.github.io/">
+<style>
+  body{margin:0;background:#F3F6FA;color:#11243B;
+       font-family:'IBM Plex Sans',ui-sans-serif,system-ui,sans-serif;
+       display:flex;min-height:100vh;align-items:center;justify-content:center;padding:24px}
+  .b{max-width:52ch;text-align:center}
+  p.k{font-family:'IBM Plex Mono',ui-monospace,monospace;font-size:12.5px;
+      letter-spacing:.16em;text-transform:uppercase;color:#1D70B3;margin:0 0 14px}
+  h1{font-size:clamp(26px,4vw,38px);font-weight:600;letter-spacing:-.02em;margin:0 0 14px}
+  p{font-size:17px;line-height:1.6;color:#46586D;margin:0 0 22px}
+  a{display:inline-flex;align-items:center;min-height:44px;padding:11px 20px;
+    border-radius:4px;background:#11243B;color:#fff;text-decoration:none;font-size:15px}
+</style>
+</head>
+<body>
+  <div class="b">
+    <p class="k">This address has moved</p>
+    <h1>CM-iTAD Lab is now at cm-itad.github.io</h1>
+    <p>You should be redirected automatically. If not, follow the link below &mdash; please update any bookmark pointing at the old address.</p>
+    <a href="https://cm-itad.github.io/">Go to cm-itad.github.io</a>
+  </div>
+</body>
+</html>
